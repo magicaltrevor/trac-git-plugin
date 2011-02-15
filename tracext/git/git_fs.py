@@ -149,7 +149,7 @@ class GitConnector(Component):
                 testrepo.get_changeset(testrepo.normalize_rev(sha))
                 reponame = testrepo.reponame
             except Exception, e:
-                self.log.debug("%s not found in repo: %s" % (sha, testrepo.reponame))
+                self.log.debug("%s not found in repo: %s" % (sha, r[0]))
 
 
         try:
