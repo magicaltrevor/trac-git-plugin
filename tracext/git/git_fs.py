@@ -601,7 +601,7 @@ class GitChangeset(Changeset):
     def __init__(self, repos, sha):
         if sha is None:
             raise NoSuchChangeset(sha)
-        
+
         try:
             msg, props = repos.git.read_commit(sha)
         except PyGIT.GitErrorSha:
