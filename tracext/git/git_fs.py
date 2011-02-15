@@ -17,7 +17,7 @@ from trac.util import TracError, shorten_line
 from trac.util.datefmt import FixedOffset, to_timestamp, format_datetime
 from trac.util.text import to_unicode
 from trac.versioncontrol.api import \
-     Changeset, Node, Repository, IRepositoryConnector, NoSuchChangeset, NoSuchNode, \
+     Changeset, Node, Repository, RepositoryManager, IRepositoryConnector, NoSuchChangeset, NoSuchNode, \
      IRepositoryProvider
 from trac.wiki import IWikiSyntaxProvider
 from trac.versioncontrol.cache import CachedRepository, CachedChangeset
@@ -140,6 +140,17 @@ class GitConnector(Component):
                 reponame = context.resource.parent.id
                 break
             context = context.parent
+
+        repos = RepositoryManager(self.env).get_repositories()
+
+        for r in repos:
+            try:
+                RepositoryManager(self.env).get_repository(r)
+                r.get_changeset(r.normalize_rev(sha))
+                reponame = r.reponame
+            except Exception, e:
+                self.log.debug("%s not found in repo: %s" % (sha, r.reponame))
+
 
         try:
             repos = self.env.get_repository(reponame)
