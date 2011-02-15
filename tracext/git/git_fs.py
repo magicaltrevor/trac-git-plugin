@@ -145,7 +145,7 @@ class GitConnector(Component):
 
         for r in repos:
             try:
-                testrepo = RepositoryManager(self.env).get_repository(r)
+                testrepo = RepositoryManager(self.env).get_repository(r[0])
                 testrepo.get_changeset(testrepo.normalize_rev(sha))
                 reponame = testrepo.reponame
             except Exception, e:
