@@ -141,15 +141,15 @@ class GitConnector(Component):
                 break
             context = context.parent
 
-        repos = RepositoryManager(self.env).get_repositories()
+        repos = RepositoryManager(self.env).get_all_repositories()
 
         for r in repos:
             try:
-                testrepo = RepositoryManager(self.env).get_repository(r[0])
+                testrepo = RepositoryManager(self.env).get_repository(r)
                 testrepo.get_changeset(testrepo.normalize_rev(sha))
                 reponame = testrepo.reponame
             except Exception, e:
-                self.log.debug("%s not found in repo: %s" % (sha, r[0]))
+                self.log.debug("%s not found in repo: %s" % (sha, r))
 
 
         try:
