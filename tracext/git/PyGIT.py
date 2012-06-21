@@ -181,7 +181,7 @@ class Storage(object):
         try:
             g = GitCore(git_bin=git_bin)
             [v] = g.version().splitlines()
-            _, _, version = v.strip().split()
+            _, _, version = v.strip().split()[:3] # make sure we only get three.
             # 'version' has usually at least 3 numeric version components, e.g.::
             #  1.5.4.2
             #  1.5.4.3.230.g2db511
